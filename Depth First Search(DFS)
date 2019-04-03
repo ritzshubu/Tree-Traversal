@@ -1,0 +1,47 @@
+#include<stdio.h>
+int i,j,v,n;
+int cost[9][9],visited[10],order[12],count=1;
+void dfs(int v)
+{
+	int w;
+	visited[v]=1;
+	order[count++]=v;
+	for(w=1;w<=n;w++)
+	{
+		if(cost[v][w]&&(visited[w]==0)&&cost[w][v])
+		{
+			visited[w]=1;
+			printf("\n%d",w);
+			dfs(w);
+		}
+	}
+}
+int main()
+{
+	int flag=0;
+	printf("\nEnter no of vertices\t");
+	scanf("%d",&n);
+	printf("\nEnter Adjacency Matrix\n");
+	for(i=1;i<=n;i++)
+		for(j=1;j<=n;j++)
+			scanf("%d",&cost[i][j]);
+	for(i=1;i<=n;i++)
+		visited[i]=0;
+	printf("\nEnter Starting Vertex\t");
+	scanf("%d",&v);
+	dfs(v);
+	for(i=1;i<=n;i++)
+		{
+			if(visited[i]==0)
+				{
+					flag=1;
+					printf("\nDisconnected Graph\n");
+					break;
+				}
+		}
+	if(flag==0){
+		printf("\nConnected Graph\n");
+		for(i=1;i<=n;i++)
+			printf("\t%d",order[i]);
+		}
+}
